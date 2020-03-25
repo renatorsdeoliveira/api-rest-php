@@ -55,9 +55,25 @@
 
 
         break;
+
+        case "GET":
+            header("HTTP/1.1 200 OK");
+
+            $users = new User();
+            if($users->find()->Count() > 0){
+                $return = array();
+                foreach($users->find()->fetch(true) as $user){
+                    // Tratamento dos dados vindos do banco
+                    array_push( $return, $user->data());
+                }
+                echo json_encode(array("response" => $return)); 
+            }else{
+                echo json_encode(array("response" => "Nenhum usúario localizado!!!")); 
+            }
+        break;
         
         default:
             header("HTTP/1.1 401 Unauthorized");
                 echo json_encode(array("respose" => "Metodo não encontrado"));
-            break;
+        break;
     }
