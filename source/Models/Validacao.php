@@ -1,6 +1,6 @@
 <?php
 
-    namespace Source\Model;
+    namespace Source\Models;
 
     final class Validacao{
         public function validacaoString(string $string){

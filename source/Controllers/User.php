@@ -1,10 +1,11 @@
 <?php 
 
-    namespace Source\Controller;
+    namespace Source\Controllers;
 
-use Source\Model\Validacao;
+    use Source\Models\Validacao;
+    use Source\Models\User;
 
-require "../../vendor/autoload.php";
+    require "../../vendor/autoload.php";
     require "../config.php";
     
     switch ($_SERVER["REQUEST_METHOD"]) {
@@ -34,7 +35,7 @@ require "../../vendor/autoload.php";
                     echo json_encode(array("respose" => "Há campos invalidos no formulario", "filds"=>$erros));
                     exit;  
                 }
-                var_dump($erros);
+
 
             break;
         
