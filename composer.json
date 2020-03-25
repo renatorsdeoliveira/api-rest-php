@@ -1,0 +1,21 @@
+{
+    "name": "texugo/restfull",
+    "description": "Simples API",
+    "type": "project",
+    "require": {
+        "coffeecode/datalayer": "1.1.*"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Renato",
+            "email": "renatorsdeoliveira@gmail.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "autoload": {
+        "psr-4": {
+            "Source\\": "source/"
+        }
+    }
+}
