@@ -30,11 +30,28 @@
                     array_push($erros, "Email informado invalido!");
                 }
 
-                if(count($erros)>0){
+                if(count($erros) > 0){
                     header("HTTP/1.1 400 Bad Request");
-                    echo json_encode(array("respose" => "Há campos invalidos no formulario", "filds"=>$erros));
+                    echo json_encode(array("respose" => "Há campos invalidos no formulario", "fields" => $erros));
                     exit;  
                 }
+
+                
+                $user = new User();
+                $user->first_name = $data->first_name;
+                $user->last_name = $data->last_name;
+                $user->email = $data->email;
+                $user->save();
+
+
+                if($user->fail()){
+                    header("HTTP/1.1 500 Internal Server Error");
+                    echo json_encode(array("respose" => "Metodo não Previsto na API"));
+                    exit;
+                }
+
+                header("HTTP/1.1 201 Created");
+                echo json_encode(array("respose" => "Usuario criado com sucesso!!!"));
 
 
             break;
