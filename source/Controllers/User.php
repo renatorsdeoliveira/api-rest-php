@@ -88,6 +88,11 @@
             }
 
             $erros = array();
+            if(!Validacao::validacaoInteger($userId)){
+                header("HTTP/1.1 400 Bad Request");
+                echo json_encode(array("response" => "ID informado e inválido"));
+                exit;   
+            }
             if(!Validacao::validacaoString($data->first_name)){
                 array_push($erros, "Nome informado invalido!");
             }
@@ -129,7 +134,11 @@
                 header("HTTP/1.1 400 Bad resquest");
                 echo json_encode(array("response" => "ID não informado."));
             }
-
+            if(!Validacao::validacaoInteger($userId)){
+                header("HTTP/1.1 400 Bad Request");
+                echo json_encode(array("response" => "ID informado e inválido"));
+                exit;   
+            }
             $user = (new User())->findById($userId);
             if(!$user){
                 header("HTTP/1.1 200 OK");

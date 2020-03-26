@@ -3,13 +3,13 @@
     namespace Source\Models;
 
     final class Validacao{
-        public function validacaoString(string $string){
+        public static function validacaoString(string $string){
             return strlen($string)>=3 && !is_numeric($string);
         }
-        public function validacaoEmail(string $eMail){    
+        public static function validacaoEmail(string $eMail){    
             return filter_var($eMail, FILTER_VALIDATE_EMAIL);
         }
-        public function validacaoInteger(string $Integer){
-            return filter_var($Integer,FILTER_VALIDATE_INT);
+        public static function validacaoInteger(string $Integer){
+            return filter_var($Integer, FILTER_VALIDATE_INT) && $Integer > 0; 
         }
     }
