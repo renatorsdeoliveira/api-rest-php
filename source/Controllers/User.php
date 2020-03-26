@@ -14,7 +14,7 @@
             
             if(!$data){
                 header("HTTP/1.1 400 Bad Request");
-                echo json_encode(array("respose" => "Metodo não encontrado"));
+                echo json_encode(array("response" => "Metodo não encontrado"));
                 exit;   
             }
 
@@ -32,7 +32,7 @@
 
             if(count($erros) > 0){
                 header("HTTP/1.1 400 Bad Request");
-                echo json_encode(array("respose" => "Há campos invalidos no formulario", "fields" => $erros));
+                echo json_encode(array("response" => "Há campos invalidos no formulario", "fields" => $erros));
                 exit;  
             }
 
@@ -46,12 +46,12 @@
 
             if($user->fail()){
                 header("HTTP/1.1 500 Internal Server Error");
-                echo json_encode(array("respose" => $user->fail()->getMessage())); 
+                echo json_encode(array("response" => $user->fail()->getMessage())); 
                 exit;
             }
 
             header("HTTP/1.1 201 Created");
-            echo json_encode(array("respose" => "Usuario criado com sucesso!!!"));
+            echo json_encode(array("response" => "Usuário criado com sucesso!!!"));
 
         break;
 
@@ -67,7 +67,7 @@
                 }
                 echo json_encode(array("response" => $return)); 
             }else{
-                echo json_encode(array("response" => "Nenhum usúario localizado!!!")); 
+                echo json_encode(array("response" => "Nenhum usuário localizado!!!")); 
             }
         break;
 
@@ -76,7 +76,7 @@
             $userId = filter_input(INPUT_GET, "id");
             if(!$userId){
                 header("HTTP/1.1 400 Bad Request");
-                echo json_encode(array("response" => "Id não encontrado"));
+                echo json_encode(array("response" => "Id não encontrado."));
                 exit; 
             }
 
@@ -110,16 +110,46 @@
             $user->save(); 
             if ($user->fail()) {
                 header("HTTP/1.1 500 Internal Server Error");
-                echo json_encode(array("respose" => $user->fail()->getMessage()));
+                echo json_encode(array("response" => $user->fail()->getMessage()));
                 exit;
             }
             header("HTTP/1.1 201 Created");
-            echo json_encode(array("request"=>" Usúario atualizado com sucesso"));
+            echo json_encode(array("request"=>" Usuário atualizado com sucesso"));
 
         break;
         
+        case "DELETE":
+            $userId = filter_input(INPUT_GET, "id");
+            if(!$userId){
+                header("HTTP/1.1 400 Bad resquest");
+                echo json_encode(array("response" => "ID não informado."));
+            }
+
+            $user = (new User())->findById($userId);
+            if(!$user){
+                header("HTTP/1.1 200 OK");
+                echo json_encode(array("response" => "Nenhumn usuário encotrado."));
+                exit;
+            }
+
+            $verify = $user->destroy();
+            if($user->fail()){
+                header("HTTP/1.1 500 Internal Sever Error");
+                echo json_encode(array("response" => $user->fail()->getMessage()));
+                exit;
+            }
+           
+            if($verify){
+                header("HTTP/1.1 200 OK");
+                echo json_encode(array("response" => "Usuário excluido com sucesso."));
+            }else{
+                header("HTTP/1.1 200 OK");
+                echo json_encode(array("response" => "Nnhum usuário pode ser excluido."));
+            }
+
+        break;
         default:
             header("HTTP/1.1 401 Unauthorized");
-            echo json_encode(array("respose" => "Metodo não encontrado"));
+            echo json_encode(array("response" => "Metodo não encontrado"));
         break;
     }
