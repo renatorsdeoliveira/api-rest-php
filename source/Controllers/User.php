@@ -104,6 +104,11 @@
             }
            
             $user = (new User())->findById($userId);
+            if(!$user){
+                header("HTTP/1.1 200 OK");
+                echo json_encode(array("response" => "Nenhumn usuário encotrado."));
+                exit;
+            }
             $user->first_name = $data->first_name;
             $user->last_name = $data->last_name;
             $user->email = $data->email;
